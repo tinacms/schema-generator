@@ -1,9 +1,80 @@
 import { Dialog, Transition } from "@headlessui/react";
 import { XIcon } from "@heroicons/react/outline";
-import { Fragment, useEffect, useState } from "react";
+import matter from "gray-matter";
+import { Fragment, useEffect, useMemo, useState } from "react";
+
+interface Field {
+  name: string;
+  label: string;
+  type: string;
+  fields?: Field[];
+  list?: boolean;
+}
+
+const getFields = (data: any): Field[] => {
+  return Object.keys(data).map((field) => {
+    let type: string = typeof data[field];
+    if (type == "object" && Array.isArray(data[field])) {
+      type = "array";
+    }
+
+    if (type == "array") {
+      if (data[field].length) {
+        if (typeof data[field][0] == "object") {
+          return {
+            name: field,
+            label: field,
+            type: "object",
+            fields: getFields(data[field][0]),
+            list: true,
+          };
+        } else {
+          //primitive type group
+          return {
+            name: field,
+            label: field,
+            type: typeof data[field][0],
+            list: true,
+          };
+        }
+      } else {
+        // nothing in list to tell the possible type
+        return { name: field, label: field, type: "string", list: true };
+      }
+    }
+
+    const fields = type == "object" ? getFields(data[field]) : [];
+    return { name: field, label: field, type: type, fields };
+  });
+};
+
+const createCollectionDef = (
+  name: string,
+  collectionPath: string,
+  markdown: string
+) => {
+  const data = matter(markdown);
+  const fields = getFields(data.data);
+
+  const collectionDef = {
+    name,
+    label: name,
+    path: collectionPath.split("/").slice(0, -1).join("/"),
+    fields,
+  };
+
+  return collectionDef;
+};
 
 export default function SchemaPreview({ markdown }: any) {
   const [open, setOpen] = useState(false);
+
+  const schema = useMemo(() => {
+    if (!markdown) {
+      return {};
+    }
+    return createCollectionDef("foo", "src/content/bar", markdown);
+  }, [markdown]);
 
   useEffect(() => {
     if (markdown) {
@@ -51,7 +122,9 @@ export default function SchemaPreview({ markdown }: any) {
                     </div>
                   </div>
                   <div className="mt-6 relative flex-1 px-4 sm:px-6">
-                    <code>{markdown}</code>
+                    <code>
+                      <pre>{JSON.stringify(schema, null, 4)}</pre>
+                    </code>
                   </div>
                 </div>
               </div>

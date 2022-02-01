@@ -1,7 +1,7 @@
 import { useCallback } from "react";
-import Dropzone, { useDropzone } from "react-dropzone";
+import { useDropzone } from "react-dropzone";
 
-export default function FileDropper() {
+export default function FileDropper({ setMarkdown }: any) {
   const onDrop = useCallback((acceptedFiles) => {
     acceptedFiles.forEach((file: any) => {
       const reader = new FileReader();
@@ -11,11 +11,17 @@ export default function FileDropper() {
       reader.onload = () => {
         // Do whatever you want with the file contents
         const binaryStr = reader.result;
-        console.log(binaryStr);
+
+        var decoder = new TextDecoder("utf-8");
+        const result = decoder.decode(reader.result as any);
+        console.log(result);
+
+        setMarkdown(result);
       };
       reader.readAsArrayBuffer(file);
     });
   }, []);
+
   const { getRootProps, getInputProps } = useDropzone({ onDrop });
 
   return (

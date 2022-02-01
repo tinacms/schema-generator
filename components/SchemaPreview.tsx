@@ -66,20 +66,12 @@ const createCollectionDef = (
   return collectionDef;
 };
 
-export default function SchemaPreview({ markdown }: any) {
-  const [open, setOpen] = useState(false);
-
+export default function SchemaPreview({ markdown, open, setOpen }: any) {
   const schema = useMemo(() => {
     if (!markdown) {
       return {};
     }
     return createCollectionDef("foo", "src/content/bar", markdown);
-  }, [markdown]);
-
-  useEffect(() => {
-    if (markdown) {
-      setOpen(true);
-    }
   }, [markdown]);
 
   return (

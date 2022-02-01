@@ -1,5 +1,5 @@
 /* This example requires Tailwind CSS v2.0+ */
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Disclosure } from "@headlessui/react";
 import { BellIcon, MenuIcon, XIcon } from "@heroicons/react/outline";
 import FileDropper from "../components/FileDropper";
@@ -42,6 +42,13 @@ const Logo = () => (
 
 export default function Example() {
   const [markdown, setMarkdown] = useState<string>();
+  const [open, setOpen] = useState(false);
+
+  useEffect(() => {
+    if (markdown) {
+      setOpen(true);
+    }
+  }, [markdown]);
 
   return (
     <>
@@ -146,6 +153,13 @@ export default function Example() {
         <div className="py-10">
           <header>
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+              <button
+                type="button"
+                onClick={() => setOpen(!open)}
+                className="float-right inline-flex items-center px-2.5 py-1.5 border border-gray-300 shadow-sm text-xs font-medium rounded text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+              >
+                Toggle Schema
+              </button>
               <h1 className="text-3xl font-bold leading-tight text-gray-900">
                 Tina Schema Generator
               </h1>
@@ -156,7 +170,11 @@ export default function Example() {
               {/* Replace with your content */}
               <div className="px-4 py-8 sm:px-0">
                 <FileDropper setMarkdown={setMarkdown} />
-                <SchemaPreview markdown={markdown} />
+                <SchemaPreview
+                  markdown={markdown}
+                  open={open}
+                  setOpen={setOpen}
+                />
               </div>
               {/* /End replace */}
             </div>

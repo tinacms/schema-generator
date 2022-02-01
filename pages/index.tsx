@@ -1,8 +1,9 @@
 /* This example requires Tailwind CSS v2.0+ */
-import { Fragment, useState } from "react";
-import { Disclosure, Menu, Transition } from "@headlessui/react";
+import { useState } from "react";
+import { Disclosure } from "@headlessui/react";
 import { BellIcon, MenuIcon, XIcon } from "@heroicons/react/outline";
 import FileDropper from "../components/FileDropper";
+import SchemaPreview from "../components/SchemaPreview";
 
 const user = {
   name: "Tom Cook",
@@ -155,7 +156,7 @@ export default function Example() {
               {/* Replace with your content */}
               <div className="px-4 py-8 sm:px-0">
                 <FileDropper setMarkdown={setMarkdown} />
-                <p>{markdown}</p>
+                <SchemaPreview markdown={markdown} />
               </div>
               {/* /End replace */}
             </div>

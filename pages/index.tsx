@@ -41,14 +41,18 @@ const Logo = () => (
 );
 
 export default function Example() {
-  const [markdown, setMarkdown] = useState<string>();
+  const [markdownFiles, setMarkdownFiles] = useState<string[]>([]);
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
-    if (markdown) {
+    if (markdownFiles?.length) {
       setOpen(true);
     }
-  }, [markdown]);
+  }, [markdownFiles?.length]);
+
+  const addMarkdown = (markdownFile: string) => {
+    setMarkdownFiles((old) => [...old, markdownFile]);
+  };
 
   return (
     <>
@@ -163,15 +167,19 @@ export default function Example() {
               <h1 className="text-3xl font-bold leading-tight text-gray-900">
                 Tina Schema Generator
               </h1>
+              <p>
+                Drag and drop a .md file to generate a sample collection for
+                your Tina schema.
+              </p>
             </div>
           </header>
           <main>
             <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
               {/* Replace with your content */}
               <div className="px-4 py-8 sm:px-0">
-                <FileDropper setMarkdown={setMarkdown} />
+                <FileDropper setMarkdown={addMarkdown} />
                 <SchemaPreview
-                  markdown={markdown}
+                  markdownFiles={markdownFiles}
                   open={open}
                   setOpen={setOpen}
                 />

@@ -5,13 +5,7 @@ export default function FileDropper({ setMarkdown }: any) {
   const onDrop = useCallback((acceptedFiles) => {
     acceptedFiles.forEach((file: any) => {
       const reader = new FileReader();
-
-      reader.onabort = () => console.log("file reading was aborted");
-      reader.onerror = () => console.log("file reading has failed");
       reader.onload = () => {
-        // Do whatever you want with the file contents
-        const binaryStr = reader.result;
-
         var decoder = new TextDecoder("utf-8");
         const result = decoder.decode(reader.result as any);
         console.log(result);
@@ -59,7 +53,7 @@ export default function FileDropper({ setMarkdown }: any) {
                     className="sr-only"
                   />
                 </label>
-                <p className="pl-1">or drag and drop</p>
+                <p className="pl-1">(drag and drop)</p>
               </div>
             </div>
           </section>

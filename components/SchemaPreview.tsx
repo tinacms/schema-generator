@@ -66,13 +66,14 @@ const createCollectionDef = (
   return collectionDef;
 };
 
-export default function SchemaPreview({ markdown, open, setOpen }: any) {
+export default function SchemaPreview({ markdownFiles, open, setOpen }: any) {
   const schema = useMemo(() => {
-    if (!markdown) {
-      return {};
-    }
-    return createCollectionDef("foo", "src/content/bar", markdown);
-  }, [markdown]);
+    return {
+      collections: markdownFiles.map((markdown: string) =>
+        createCollectionDef("collection-name", "path/to/collection", markdown)
+      ),
+    };
+  }, [markdownFiles]);
 
   return (
     <Transition.Root show={open} as={Fragment}>

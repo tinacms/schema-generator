@@ -1,7 +1,7 @@
-import { Dialog, Transition } from "@headlessui/react";
-import { XIcon } from "@heroicons/react/outline";
+import { Dialog, DialogPanel, DialogTitle, Transition, TransitionChild } from "@headlessui/react";
+import { XMarkIcon } from "@heroicons/react/24/outline";
 import matter from "gray-matter";
-import { Fragment, useEffect, useMemo, useState } from "react";
+import { Fragment, useMemo } from "react";
 
 interface Field {
   name: string;
@@ -76,17 +76,17 @@ export default function SchemaPreview({ markdownFiles, open, setOpen }: any) {
   }, [markdownFiles]);
 
   return (
-    <Transition.Root show={open} as={Fragment}>
+    <Transition show={open} as={Fragment}>
       <Dialog
         as="div"
         className="fixed inset-0 overflow-hidden"
         onClose={setOpen}
       >
         <div className="absolute inset-0 overflow-hidden">
-          <Dialog.Overlay className="absolute inset-0" />
+          <div className="absolute inset-0" />
 
           <div className="fixed inset-y-0 right-0 pl-10 max-w-full flex">
-            <Transition.Child
+            <TransitionChild
               as={Fragment}
               enter="transform transition ease-in-out duration-500 sm:duration-700"
               enterFrom="translate-x-full"
@@ -95,13 +95,13 @@ export default function SchemaPreview({ markdownFiles, open, setOpen }: any) {
               leaveFrom="translate-x-0"
               leaveTo="translate-x-full"
             >
-              <div className="w-screen max-w-md">
+              <DialogPanel className="w-screen max-w-md">
                 <div className="h-full flex flex-col py-6 bg-white shadow-xl overflow-y-scroll">
                   <div className="px-4 sm:px-6">
                     <div className="flex items-start justify-between">
-                      <Dialog.Title className="text-lg font-medium text-gray-900">
+                      <DialogTitle className="text-lg font-medium text-gray-900">
                         Your generated schema
-                      </Dialog.Title>
+                      </DialogTitle>
                       <div className="ml-3 h-7 flex items-center">
                         <button
                           type="button"
@@ -109,7 +109,7 @@ export default function SchemaPreview({ markdownFiles, open, setOpen }: any) {
                           onClick={() => setOpen(false)}
                         >
                           <span className="sr-only">Close panel</span>
-                          <XIcon className="h-6 w-6" aria-hidden="true" />
+                          <XMarkIcon className="h-6 w-6" aria-hidden="true" />
                         </button>
                       </div>
                     </div>
@@ -120,11 +120,11 @@ export default function SchemaPreview({ markdownFiles, open, setOpen }: any) {
                     </code>
                   </div>
                 </div>
-              </div>
-            </Transition.Child>
+              </DialogPanel>
+            </TransitionChild>
           </div>
         </div>
       </Dialog>
-    </Transition.Root>
+    </Transition>
   );
 }

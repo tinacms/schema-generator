@@ -1,7 +1,7 @@
 /* This example requires Tailwind CSS v2.0+ */
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Disclosure } from "@headlessui/react";
-import { BellIcon, MenuIcon, XIcon } from "@heroicons/react/outline";
+import { BellIcon, Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 import FileDropper from "../components/FileDropper";
 import SchemaPreview from "../components/SchemaPreview";
 
@@ -44,14 +44,9 @@ export default function Example() {
   const [markdownFiles, setMarkdownFiles] = useState<string[]>([]);
   const [open, setOpen] = useState(false);
 
-  useEffect(() => {
-    if (markdownFiles?.length) {
-      setOpen(true);
-    }
-  }, [markdownFiles?.length]);
-
   const addMarkdown = (markdownFile: string) => {
     setMarkdownFiles((old) => [...old, markdownFile]);
+    setOpen(true);
   };
 
   return (
@@ -80,9 +75,9 @@ export default function Example() {
                     <Disclosure.Button className="bg-white inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
                       <span className="sr-only">Open main menu</span>
                       {open ? (
-                        <XIcon className="block h-6 w-6" aria-hidden="true" />
+                        <XMarkIcon className="block h-6 w-6" aria-hidden="true" />
                       ) : (
-                        <MenuIcon
+                        <Bars3Icon
                           className="block h-6 w-6"
                           aria-hidden="true"
                         />

@@ -2,8 +2,8 @@ import { useCallback } from "react";
 import { useDropzone } from "react-dropzone";
 
 export default function FileDropper({ setMarkdown }: any) {
-  const onDrop = useCallback((acceptedFiles) => {
-    acceptedFiles.forEach((file: any) => {
+  const onDrop = useCallback((acceptedFiles: File[]) => {
+    acceptedFiles.forEach((file: File) => {
       const reader = new FileReader();
       reader.onload = () => {
         var decoder = new TextDecoder("utf-8");
@@ -14,7 +14,7 @@ export default function FileDropper({ setMarkdown }: any) {
       };
       reader.readAsArrayBuffer(file);
     });
-  }, []);
+  }, [setMarkdown]);
 
   const { getRootProps, getInputProps } = useDropzone({ onDrop });
 

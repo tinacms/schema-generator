@@ -5,26 +5,26 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "eslint ."
   },
   "dependencies": {
-    "@headlessui/react": "^1.4.3",
-    "@heroicons/react": "^1.0.5",
+    "@headlessui/react": "^2.2.9",
+    "@heroicons/react": "^2.2.0",
     "gray-matter": "^4.0.3",
-    "next": "12.0.9",
-    "react": "17.0.2",
-    "react-dom": "17.0.2",
-    "react-dropzone": "^11.5.3",
-    "react-router-dom": "^6.2.1"
+    "next": "16.1.1",
+    "react": "18.3.1",
+    "react-dom": "18.3.1",
+    "react-dropzone": "^14.3.8",
+    "react-router-dom": "^7.11.0"
   },
   "devDependencies": {
-    "@types/node": "17.0.13",
-    "@types/react": "17.0.38",
+    "@types/node": "25.0.3",
+    "@types/react": "19.2.7",
     "autoprefixer": "^10.4.2",
-    "eslint": "8.8.0",
-    "eslint-config-next": "12.0.9",
+    "eslint": "9.39.2",
+    "eslint-config-next": "16.1.1",
     "postcss": "^8.4.5",
-    "tailwindcss": "^3.0.18",
-    "typescript": "4.5.5"
+    "tailwindcss": "^3.4.19",
+    "typescript": "5.9.3"
   }
 }
